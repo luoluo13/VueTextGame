@@ -1,0 +1,59 @@
+{
+  "start": {
+    "text": "你缓缓睁开眼睛，发现自己身处修真世界...",
+    "options": [
+      {
+        "text": "查看自身修为",
+        "outcome": "你的境界已至筑基巅峰",
+        "next": "cultivation",
+        "effects": {
+          "power": 200
+        }
+      },
+      {
+        "text": "探索秘境",
+        "outcome": "发现一处灵气浓郁的洞天福地",
+        "next": "adventure"
+      }
+    ]
+  },
+  "cultivation": {
+    "text": "前方遇到一个山洞，你决定：",
+    "options": [
+      {
+        "text": "进入山洞",
+        "outcome": "洞中发现上古修士遗留的丹药",
+        "next": "cave_exploration",
+        "effects": {
+          "money": 500
+        }
+      },
+      {
+        "text": "继续前进",
+        "outcome": "在山谷中发现稀有灵草",
+        "next": "herb_collection",
+        "effects": {
+          "power": 300
+        }
+      }
+    ]
+  },
+  "adventure": {
+    "text": "秘境中灵气异常波动，你选择：",
+    "options": [
+      {
+        "text": "深入探查",
+        "outcome": "遭遇守护灵兽陷入苦战",
+        "next": "battle",
+        "effects": {
+          "power": -150
+        }
+      },
+      {
+        "text": "谨慎撤退",
+        "outcome": "避开危险保存实力",
+        "next": "retreat"
+      }
+    ]
+  }
+}

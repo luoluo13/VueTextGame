@@ -1,0 +1,200 @@
+/* 主容器布局样式 */
+.container {
+  display: flex;
+  height: 100vh; /* 全屏高度 */
+  background: #1a1a1a; /* 深色背景 */
+  color: #e0e0e0; /* 浅色文字 */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑过渡效果 */
+}
+
+/* 左侧侧边栏样式 */
+.left-sidebar {
+  position: relative;
+  background: #2d2d2d; /* 次深背景 */
+  padding: 20rpx;
+  border-right: 1px solid #404040; /* 右侧边框 */
+  transition: width 0.3s ease; /* 宽度变化过渡 */
+}
+
+/* 拖拽手柄样式 */
+.drag-handle {
+  position: absolute;
+  right: -8rpx;
+  top: 0;
+  width: 16rpx;
+  height: 100%;
+  background: #404040; /* 手柄颜色 */
+  cursor: col-resize; /* 调整宽度光标 */
+  z-index: 10; /* 确保手柄在最上层 */
+}
+
+/* 主内容区样式 */
+.main-content {
+  flex: 1; /* 填充剩余空间 */
+  display: flex;
+  flex-direction: column;
+  padding: 32rpx;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+/* 选项按钮样式 */
+.option-btn {
+  background: #3366ff !important; /* 主色调按钮 */
+  color: white !important;
+  border: none;
+  border-radius: 8rpx;
+  padding: 24rpx;
+  font-size: 26rpx;
+  transition: all 0.2s ease; /* 按钮交互过渡 */
+}
+
+/* 右侧角色面板样式 */
+.right-panel {
+  width: 20%;
+  background: #2d2d2d; 
+  padding: 32rpx;
+  border-left: 1px solid #404040; /* 左侧边框 */
+}
+  
+  .menu-item {
+    padding: 24rpx;
+    margin: 16rpx 0;
+    border-radius: 8rpx;
+    background: #373737;
+    transition: all 0.2s ease;
+  }
+  
+  .menu-item:hover {
+    background: #404040;
+    transform: translateX(8rpx);
+  }
+  
+  /* 中央剧情区域 */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 32rpx;
+    min-width: 0; /* 防止内容溢出 */
+  }
+  
+  .story-container {
+    flex: 1;
+    background: #262626;
+    border-radius: 12rpx;
+    padding: 32rpx;
+    margin-bottom: 24rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+  }
+  
+  .story-text {
+    font-size: 28rpx;
+    line-height: 1.8;
+    letter-spacing: 0.8rpx;
+  }
+  
+  .options-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240rpx, 1fr));
+    gap: 24rpx;
+    padding: 16rpx 0;
+  }
+  
+  .option-btn {
+    background: #3366ff !important;
+    color: white !important;
+    border: none;
+    border-radius: 8rpx;
+    padding: 24rpx;
+    font-size: 26rpx;
+    transition: all 0.2s ease;
+  }
+  
+  .option-btn:hover {
+    background: #2b50cc !important;
+    transform: translateY(-2rpx);
+  }
+  
+  /* 右侧角色面板 */
+  .right-panel {
+    width: 20%;
+    background: #2d2d2d;
+    padding: 32rpx;
+    border-left: 1px solid #404040;
+  }
+  
+  .character-card {
+    background: #373737;
+    border-radius: 12rpx;
+    padding: 24rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+  }
+  
+  .character-name {
+    display: block;
+    font-size: 32rpx;
+    font-weight: bold;
+    margin-bottom: 24rpx;
+  }
+  
+  .attribute {
+    font-size: 26rpx;
+    margin: 16rpx 0;
+    color: #a0a0a0;
+  }
+  
+      .logo {
+          height: 200rpx;
+          width: 200rpx;
+          margin-top: 200rpx;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 50rpx;
+      }
+  
+      .text-area {
+          display: flex;
+          justify-content: center;
+      }
+  
+      .title {
+          font-size: 36rpx;
+          color: #8f8f94;
+      }
+
+/* 合并后的story-container样式 */
+.story-container {
+    flex: 1;
+    height: 500px; /* 固定容器高度 */
+    background: #262626;
+    border-radius: 12rpx;
+    padding: 32rpx;
+    margin-bottom: 24rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* 确保内容超出时显示滚动条 */
+}
+
+/* 修正后的滚动条样式 */
+.story-container::-webkit-scrollbar {
+    width: 8px;
+    background: transparent; /* 改为透明背景 */
+}
+
+.story-container::-webkit-scrollbar-track {
+    background: rgba(64, 64, 64, 0.3); /* 使用半透明深灰色 */
+    border-radius: 4px;
+    margin: 8px 0;
+}
+.story-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+    border: 2px solid #404040; /* 添加边框增强对比 */
+}
+.story-container::-webkit-scrollbar-thumb:hover {
+    background: #888; /* 悬停时亮灰色 */
+}
+.story-text {
+    white-space: pre-wrap; /* 保留文本换行 */
+    line-height: 1.6;
+    padding: 10px;
+}
