@@ -4,6 +4,7 @@ export default {
   // 组件数据定义
   data() {
     return {
+      rightSidebarWidth: 20, // 右侧边栏初始宽度百分比
       sidebarWidth: 20,    // 侧边栏初始宽度百分比
       scrollTop: 0,        // 滚动容器当前位置
       currentStory: '',    // 当前剧情文本内容
@@ -50,7 +51,7 @@ export default {
         // 计算宽度变化量（转换为百分比）
         const delta = (moveEvent.clientX - startX) / window.innerWidth * 100;
         // 限制宽度范围在15%-30%之间
-        this.sidebarWidth = Math.min(Math.max(15, initialWidth + delta), 30);
+        this.sidebarWidth = Math.min(Math.max(10, initialWidth + delta), 30);
       }
 
       const handleUp = () => {
@@ -62,6 +63,22 @@ export default {
       // 注册鼠标事件
       document.addEventListener('mousemove', handleMove);
       document.addEventListener('mouseup', handleUp);
+    },  startResizeRight(e) {
+      const startX = e.clientX;
+      const startWidth = this.rightSidebarWidth;
+      
+      const doDrag = (e) => {
+        const delta = (startX - e.clientX) / window.innerWidth * 100;  // 反向计算
+        this.rightSidebarWidth = Math.min(Math.max(startWidth + delta, 10), 30);
+      };
+  
+      const stopDrag = () => {
+        document.removeEventListener('mousemove', doDrag);
+        document.removeEventListener('mouseup', stopDrag);
+      };
+  
+      document.addEventListener('mousemove', doDrag);
+      document.addEventListener('mouseup', stopDrag);
     },
 
     /**

@@ -11,7 +11,6 @@
       <!-- 菜单项 -->
       <view class="menu-item">存档</view>
       <view class="menu-item">设置</view>
-      <view class="menu-item">图鉴</view>
     </view>
 
     <!-- 中央剧情展示区 -->
@@ -42,8 +41,13 @@
     </view>
 
     <!-- 右侧角色信息面板 -->
-    <view class="right-panel">
-      <view class="character-card">
+    <view 
+      class="right-sidebar" 
+      :style="{ width: rightSidebarWidth + '%' }"
+      @mousedown="startResizeRight"
+    ><!-- 动态绑定宽度 --><!-- 拖拽调整宽度事件 -->
+    <div class="drag-handle right-handle"></div>  <!-- 添加右侧手柄样式 -->      
+    <view class="character-card">
         <text class="character-name">{{ character.name }}</text>  <!-- 角色名称 -->
         <view class="attribute">境界：{{ character.level }}</view>  <!-- 角色等级 -->
         <view class="attribute">战力：{{ character.power }}</view>  <!-- 战力数值 -->

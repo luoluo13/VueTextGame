@@ -15,7 +15,13 @@
   border-right: 1px solid #404040; /* 右侧边框 */
   transition: width 0.3s ease; /* 宽度变化过渡 */
 }
-
+.right-sidebar {
+  position: relative;
+  background: #2d2d2d; /* 次深背景 */
+  padding: 20rpx;
+  border-right: 1px solid #404040; /* 右侧边框 */
+  transition: width 0.3s ease; /* 宽度变化过渡 */
+}
 /* 拖拽手柄样式 */
 .drag-handle {
   position: absolute;
@@ -55,6 +61,11 @@
   padding: 32rpx;
   border-left: 1px solid #404040; /* 左侧边框 */
 }
+.right-handle {
+  left: 0;  /* 右侧定位 */
+  right: auto;
+  cursor: col-resize;
+}
   
   .menu-item {
     padding: 24rpx;
@@ -80,14 +91,22 @@
   
   .story-container {
     flex: 1;
+    height: 500px; /* 固定容器高度 */
     background: #262626;
     border-radius: 12rpx;
     padding: 32rpx;
     margin-bottom: 24rpx;
     box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* 确保内容超出时显示滚动条 */
+    overflow-x: hidden; /* 新增：阻止水平溢出 */
+    width: calc(100% - 64rpx); /* 新增：计算实际可用宽度 */
   }
   
   .story-text {
+    white-space: pre-wrap; 
+    padding: 10px;
+    max-width: 100%; /* 新增：防止文本溢出 */
+    word-break: break-word; /* 新增：处理长单词换行 */
     font-size: 28rpx;
     line-height: 1.8;
     letter-spacing: 0.8rpx;
