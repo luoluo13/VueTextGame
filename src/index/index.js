@@ -9,7 +9,10 @@ export default {
       scrollTop: 0,        // 滚动容器当前位置
       currentStory: '',    // 当前剧情文本内容
       options: [],         // 当前可选项数组
-      character: characterData // 从外部导入的角色数据
+      character: characterData, // 从外部导入的角色数据
+      currentNode: 'start', // 新增当前节点跟踪
+      isProcessing: false,   // 新增加载状态锁
+      pendingNextNode: null, // 新增：暂存后续节点
     }
   },
   
@@ -25,20 +28,37 @@ export default {
      * @param {string} node - 剧情节点标识（默认'start'）
      */
     async loadStoryData(node = 'start') {
+      if (this.isProcessing) return;
+      this.isProcessing = true;
+      
       const res = await uni.request({
         url: '/story/story.json', // 剧情数据接口地址
         method: 'GET'
       });
-      const currentData = res.data[node];
-      this.currentStory = currentData.text;  // 更新当前剧情文本
-      this.options = currentData.options || []; // 更新选项数组
+      
+      // 新增逻辑：清空后续节点缓存
+      this.pendingNextNode = null;       
+      // 更新当前节点信息
+      this.currentNode = node;
+      const currentData = res.data[node] || {};
+      
+      // 新增节点存在性检查
+      if (!res.data[node]) {
+        console.warn(`剧情节点 ${node} 不存在`);
+      }
+      
+      const separator = this.currentStory ? '\n\n' : '';
+      this.currentStory += separator + (currentData.text || '');
+      this.options = currentData.options || []; // 保持原有逻辑，空数组会自动隐藏按钮
+      this.isProcessing = false;
     },
 
     // 点击剧情区域处理
     handleClickStory() {
       // 当没有选项时自动加载默认节点
-      if (this.options.length === 0) {
-        this.loadStoryData('next_default_node');
+      if (this.options.length === 0 && !this.isProcessing) {
+        // 改为加载当前节点的默认后续
+        this.loadStoryData(this.currentNode + '_default');
       }
     },
 
@@ -87,7 +107,8 @@ export default {
      */
     selectOption(index) {
       const option = this.options[index];
-      this.currentStory += '\n\n' + option.outcome; // 追加选项结果到剧情
+      // 保持原有追加逻辑不变
+      this.currentStory += '\n\n' + option.outcome;
 
       // 自动滚动到底部
       this.$nextTick(() => {
@@ -111,9 +132,23 @@ export default {
         });
       }
 
-      // 加载后续剧情节点
+      // 修改这里：暂存后续节点，而不是立即加载
       if (option.next) {
-        this.loadStoryData(option.next);
+        this.pendingNextNode = option.next;
+      }
+      
+      // 清空选项强制进入点击等待状态
+      this.options = []; 
+    },
+
+    handleClickStory() {
+      if (this.options.length === 0 && !this.isProcessing) {
+        // 优先处理暂存的后续节点
+        if (this.pendingNextNode) {
+          this.loadStoryData(this.pendingNextNode);
+        } else {
+          this.loadStoryData(this.currentNode + '_default');
+        }
       }
     }
   }
