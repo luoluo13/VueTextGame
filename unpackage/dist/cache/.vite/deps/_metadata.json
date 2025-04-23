@@ -1,8 +1,15 @@
 {
-  "hash": "072943a5",
+  "hash": "52e1be1f",
   "configHash": "b116c8dc",
-  "lockfileHash": "e3b0c442",
-  "browserHash": "2047b05c",
-  "optimized": {},
+  "lockfileHash": "03daaf3a",
+  "browserHash": "ca3c8c21",
+  "optimized": {
+    "@vue-flow/core": {
+      "src": "../../../../../node_modules/@vue-flow/core/dist/vue-flow-core.mjs",
+      "file": "@vue-flow_core.js",
+      "fileHash": "f315d9bf",
+      "needsInterop": false
+    }
+  },
   "chunks": {}
 }

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@antv/g6": "^5.0.45",
+    "@vue-flow/controls": "^1.1.2",
+    "@vue-flow/core": "^1.42.5",
+    "@vue-flow/minimap": "^1.5.3"
+  }
+}
