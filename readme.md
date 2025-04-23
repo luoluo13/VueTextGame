@@ -13,3 +13,5 @@
 
 项目详细变更记录请查看[CHANGELOG.md](./CHANGELOG.md)
 
+贡献记录请查看[THANKS.md](./THANKS.md)
+
