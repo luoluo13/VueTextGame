@@ -150,6 +150,14 @@ export default {
           this.loadStoryData(this.currentNode + '_default');
         }
       }
-    }
-  }
+    },
+    
+    // 打开剧情设计窗口
+
+    openDesignWindow() {
+        uni.navigateTo({
+            url: '/pages/design/design'  // 跳转到设计页面
+        });
+     }
+   }
 }
