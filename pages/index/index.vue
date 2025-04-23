@@ -11,6 +11,10 @@
       <!-- 菜单项 -->
       <view class="menu-item">存档</view>
       <view class="menu-item">设置</view>
+      <view 
+        class="menu-item"
+        @click="openDesignWindow"
+      >story.json设计窗口</view>
     </view>
 
     <!-- 中央剧情展示区 -->
