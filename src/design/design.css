@@ -1,0 +1,53 @@
+.editor-container {
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(45deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.9);
+}
+
+.node {
+  position: absolute;
+  min-width: 200px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.node-header {
+  background: linear-gradient(45deg, #6b48ff, #00c2ff);
+  color: white;
+  padding: 12px;
+  border-radius: 8px 8px 0 0;
+}
+
+.option-handle {
+  padding: 8px;
+  margin: 4px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  cursor: crosshair;
+  transition: all 0.2s;
+}
+
+.connection {
+  stroke: #6b48ff;
+  stroke-width: 2;
+  fill: none;
+  marker-end: url(#arrowhead);
+}
+
+.toolbar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
