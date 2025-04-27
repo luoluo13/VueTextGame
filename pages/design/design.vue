@@ -14,7 +14,8 @@
          :key="node.id"
          class="node"
          :style="{ left: node.x + 'px', top: node.y + 'px' }"
-         @mousedown.stop="selectNode(node, $event)">
+         @mousedown.stop="selectNode(node, $event)"
+         @dblclick.stop="handleDoubleClick(node, $event)"> <!-- 新增双击事件 -->
       <div class="node-header">{{ node.title }}</div>
       <div class="node-content">
         <div v-for="(opt, i) in node.options" 
@@ -32,6 +33,23 @@
       <button @click="saveStory">💾 保存</button>
     </div>
   </view>
+  <div v-if="editDialogVisible" class="dialog-mask">
+    <div class="dialog-container">
+        <h3>节点编辑</h3>
+        <div class="form-item">
+            <label>节点名称：</label>
+            <input v-model="editTitle" type="text">
+        </div>
+        <div class="form-item">
+            <label>剧情内容：</label>
+            <textarea v-model="editContent" rows="5"></textarea>
+        </div>
+        <div class="dialog-buttons">
+            <button @click="handleConfirm">确认</button>
+            <button @click="handleCancel">取消</button>
+        </div>
+    </div>
+</div>
 </template>
 
 <script src="../../src/design/design.js"></script>

@@ -8,7 +8,12 @@ export default {
             selectedNode: null,
             linkingOption: null,
             dragOffset: { x: 0, y: 0 },
-            isDragging: false // 新增拖拽状态标记
+            isDragging: false,
+            // 新增对话框相关数据
+            editDialogVisible: false,
+            editNode: null,
+            editTitle: '',
+            editContent: ''
         }
     },
     methods: {
@@ -33,16 +38,50 @@ export default {
         saveStory() {
             const storyData = {
                 nodes: this.nodes.map(node => node.toJSON())
-            }
-            // 调用uni-app文件API保存到story.json
-            uni.saveFile({
-                filePath: './story/story.json',
-                data: JSON.stringify(storyData, null, 2),
-                success: () => uni.showToast({ title: '保存成功' }),
-                fail: (err) => console.error('保存失败:', err)
-            });
+            };
+            
+            // 创建Blob并触发下载
+            const blob = new Blob([JSON.stringify(storyData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            // 创建隐藏的下载链接
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'story.json';
+            document.body.appendChild(link);
+            link.click();
+            
+            // 清理资源
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            // 替换原来的uni-app提示
+            alert('故事文件已下载');
         },
         
+        // 修改后的双击处理方法
+        handleDoubleClick(node) {
+            this.editNode = node;
+            this.editTitle = node.title;
+            this.editContent = node.content || ''; // 新增剧情内容字段
+            this.editDialogVisible = true;
+        },
+        
+        // 新增对话框确认方法
+        handleConfirm() {
+            if (this.editNode) {
+                this.editNode.title = this.editTitle;
+                this.editNode.content = this.editContent;
+                this.editDialogVisible = false;
+            }
+        },
+        
+        // 新增对话框取消方法
+        handleCancel() {
+            this.editDialogVisible = false;
+        },
+        
+        // 修改现有节点模板事件绑定
         selectNode(node, event) {
             // 仅在鼠标左键按下时开始拖拽
             if (event.button === 0) {
@@ -56,10 +95,7 @@ export default {
                 window.addEventListener('mouseup', this.endDrag);
             }
         },
-        
-        startDrag(event) {
-            // 该方法可能不需要，可考虑移除
-        },
+
         
         onDrag(event) {
             if (this.selectedNode && this.isDragging) {
