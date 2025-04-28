@@ -13,7 +13,8 @@ export default {
             editDialogVisible: false,
             editNode: null,
             editTitle: '',
-            editContent: ''
+            editContent: '',
+            connecting: null, // 新增连接状态跟踪
         }
     },
     methods: {
@@ -22,7 +23,8 @@ export default {
                 x: Math.random() * 500,
                 y: Math.random() * 300,
                 title: '新节点',
-                options: [{ text: '新选项', next: '' }]
+                content: '', // 新增内容字段
+                options: [] // 移除默认选项
             })
             this.nodes.push(newNode)
         },
@@ -111,6 +113,54 @@ export default {
             window.removeEventListener('mouseup', this.endDrag);
             // 额外重置：清除连线状态（如有）
             this.linkingOption = null;
-        }
+        },
+        // 新增连接处理方法
+        // 新增连接结束方法
+        endConnection() {
+            this.connecting = null;
+            window.removeEventListener('mousemove', this.drawConnection);
+            window.removeEventListener('mouseup', this.endConnection);
+        },
+        
+        // 修改现有方法
+        startOutputDrag(node, event) {
+            event.stopPropagation(); // 阻止事件冒泡
+            this.connecting = {
+                type: 'output',
+                node,
+                startPos: { x: event.clientX, y: event.clientY }
+            };
+            window.addEventListener('mousemove', this.drawConnection);
+            window.addEventListener('mouseup', this.endConnection.bind(this)); // 绑定this上下文
+        },
+        
+        // 新增连接路径计算方法
+        calcConnectionPath(endNode) {  // 修改参数为直接传入目标节点
+            const startNode = this.connecting.node;
+            
+            // 获取端口坐标（基于节点位置）
+            const startX = startNode.x + startNode.ports.output.x;
+            const startY = startNode.y + startNode.ports.output.y;
+            const endX = endNode.x + endNode.ports.input.x;
+            const endY = endNode.y + endNode.ports.input.y;
+        
+            // 贝塞尔曲线路径
+            return `M ${startX} ${startY} 
+                    C ${startX + 100} ${startY}, 
+                    ${endX - 100} ${endY}, 
+                    ${endX} ${endY}`;
+        },
+
+        handleInputDrop(node, event) {
+            if (this.connecting?.type === 'output') {
+                const connection = {
+                    from: this.connecting.node.id,
+                    to: node.id,
+                    path: this.calcConnectionPath(node) // 直接传入node参数
+                };
+                this.connections.push(connection);
+            }
+            this.endConnection(); // 调用已定义的方法
+        },
     }
 }

@@ -18,7 +18,35 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
 }
+.node-content {
+  width: 100%;  /* 与header保持同宽 */
+  overflow: hidden;
+  padding: 8px;
+  height: 60px !important; /* 强制固定高度 */
+  min-height: 60px; /* 防止内容不足时收缩 */
+  max-height: 60px; /* 双层高度限制 */
+  position: relative; /* 为绝对定位子元素准备 */
+}
 
+.content-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 限制两行 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+  max-height: 3em; /* 2行 x 1.5em */
+  width: calc(100% - 4px); /* 精确计算容器宽度 */
+  box-sizing: border-box; /* 包含padding */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  white-space: pre-line; /* 允许自动换行 */
+  word-break: break-word; /* 防止长单词溢出 */
+  padding-right: 8px; /* 为省略号留出空间 */
+}
 .node-header {
   background: linear-gradient(45deg, #6b48ff, #00c2ff);
   color: white;
@@ -99,4 +127,29 @@
 .dialog-buttons button {
     margin-left: 10px;
     padding: 6px 15px;
+}
+
+.node-ports {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.port {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: crosshair;
+}
+
+.input {
+    background: #00c853;
+}
+
+.output {
+    background: #ff4081;
 }
