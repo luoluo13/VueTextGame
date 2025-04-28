@@ -18,12 +18,17 @@
          @dblclick.stop="handleDoubleClick(node, $event)"> <!-- 新增双击事件 -->
       <div class="node-header">{{ node.title }}</div>
       <div class="node-content">
-        <div v-for="(opt, i) in node.options" 
-             :key="i"
-             class="option-handle"
-             @mousedown.stop="startLinking(opt, $event)">
-          {{ opt.text }}
+        <div class="content-preview">
+            {{ node.content ? 
+               node.content.split('\n').slice(0,2).join('\n').substring(0,50) + 
+               (node.content.length > 50 || node.content.split('\n').length > 2 ? '...' : '') 
+             : '无剧情' }}
         </div>
+      <!-- 在node-content之后添加 -->
+      <div class="node-ports">
+          <div class="port input" @mouseup="handleInputDrop(node, $event)"></div>
+          <div class="port output" @mousedown.stop="startOutputDrag(node, $event)"></div>
+      </div>
       </div>
     </div>
 
